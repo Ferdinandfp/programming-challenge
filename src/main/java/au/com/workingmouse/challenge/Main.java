@@ -17,7 +17,7 @@ public class Main {
 	protected static final String OUTPUT_FILENAME = "index.html";
 
 	public static void main(String[] args) throws IOException {
-
+	
 		try {
 			Configuration.load();
 
@@ -27,7 +27,7 @@ public class Main {
 			writeFile(html);
 
 			// FIXME: ?
-			throw new SecurityException("Segmentation fault");
+			//throw new SecurityException("Segmentation fault");
 
 		} catch (Exception e) {
 			LOGGER.error("Failed to run application", e);
@@ -36,6 +36,7 @@ public class Main {
 
 	protected static List<VelocityAndDirectionData> loadAndParseFile() throws IOException {
 		FileService fileService = new FileService();
+		//Used the file service as a static class
 		List<String> lines = fileService.readLines(Configuration.getImportFile());
 
 		List<VelocityAndDirectionData> parsedLines = VelocityAndDirectionService.parseLines(lines);

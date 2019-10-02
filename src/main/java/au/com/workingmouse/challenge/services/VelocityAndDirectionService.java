@@ -72,36 +72,83 @@ public class VelocityAndDirectionService {
 
     public static List<VelocityAndDirectionData> parseLines(List<String> lines) {
         var parsedLines = new ArrayList<VelocityAndDirectionData>();
-
         int count = 0;
         for (String line : lines) {
             if (count++ == 0) {
-                // Skip header
+                 //Skip header
                 continue;
             }
             parsedLines.add(VelocityAndDirectionService.parseLine(line));
         }
-
+       
         return parsedLines;
     }
 
 
     public static String summarise(List<VelocityAndDirectionData> velocityAndDirectionDataset) {
         Integer totalLines = velocityAndDirectionDataset.size();
-
         var summaryBuilder = new StringBuilder() ;
-
-        // Transform dataset to be listed in columns rather than rows
-
+        VelocityAndDirectionData velocityData = new VelocityAndDirectionData();
+        velocityData.setRecord(0);
+        velocityData.setDcsModel(0);
+        velocityData.setDcsSerial(0);
+        velocityData.setDcsAbsTiltAvg(0.0);
+        velocityData.setDcsDirectionAvg(0.0);
+        velocityData.setDcsNorthCurAvg(0.0);
+        velocityData.setDcsEastCurAvg(0.0);
+        velocityData.setDcsHeadingAvg(0.0);
+        velocityData.setDcsTiltXAvg(0.0);
+        velocityData.setDcsTiltYAvg(0.0);
+        velocityData.setDcsSpStdAvg(0.0);
+        velocityData.setDcsSigStrengthAvg(0.0);
+        velocityData.setDcsPingCntAvg(0.0);
+        velocityData.setDcsAbsTiltAvg(0.0);
+        velocityData.setDscMaxTiltAvg(0.0);
+        velocityData.setDcsStdTiltAvg(0.0);
+        for ( int i = 0; i < totalLines; i++){
+            velocityData.setRecord(velocityData.getRecord() + velocityAndDirectionDataset.get(i).getRecord());
+            velocityData.setDcsModel(velocityData.getDcsModel() + velocityAndDirectionDataset.get(i).getDcsModel());
+            velocityData.setDcsSerial(velocityData.getDcsSerial() + velocityAndDirectionDataset.get(i).getDcsSerial());
+            velocityData.setDcsAbsTiltAvg(velocityData.getDcsAbsTiltAvg() + velocityAndDirectionDataset.get(i).getDcsAbsspdAvg());
+            velocityData.setDcsDirectionAvg(velocityData.getDcsDirectionAvg() + velocityAndDirectionDataset.get(i).getDcsDirectionAvg());
+            velocityData.setDcsNorthCurAvg(velocityData.getDcsNorthCurAvg() + velocityAndDirectionDataset.get(i).getDcsNorthCurAvg());
+            velocityData.setDcsEastCurAvg(velocityData.getDcsEastCurAvg() + velocityAndDirectionDataset.get(i).getDcsEastCurAvg());
+            velocityData.setDcsHeadingAvg(velocityData.getDcsHeadingAvg() + velocityAndDirectionDataset.get(i).getDcsHeadingAvg());
+            velocityData.setDcsTiltXAvg(velocityData.getDcsTiltXAvg() + velocityAndDirectionDataset.get(i).getDcsTiltXAvg());
+            velocityData.setDcsTiltYAvg(velocityData.getDcsTiltYAvg() + velocityAndDirectionDataset.get(i).getDcsTiltYAvg());
+            velocityData.setDcsSpStdAvg(velocityData.getDcsSpStdAvg() + velocityAndDirectionDataset.get(i).getDcsSpStdAvg());
+            velocityData.setDcsSigStrengthAvg(velocityData.getDcsSigStrengthAvg() + velocityAndDirectionDataset.get(i).getDcsSigStrengthAvg());
+            velocityData.setDcsPingCntAvg(velocityData.getDcsPingCntAvg() + velocityAndDirectionDataset.get(i).getDcsPingCntAvg());
+            velocityData.setDcsAbsTiltAvg(velocityData.getDcsAbsTiltAvg() + velocityAndDirectionDataset.get(i).getDcsAbsTiltAvg());
+            velocityData.setDscMaxTiltAvg(velocityData.getDscMaxTiltAvg() + velocityAndDirectionDataset.get(i).getDscMaxTiltAvg());
+            velocityData.setDcsStdTiltAvg(velocityData.getDcsStdTiltAvg() + velocityAndDirectionDataset.get(i).getDcsStdTiltAvg());
+        }
+       
         summaryBuilder.append("<head></head>")
                 .append("<body>")
                 .append("<h2>Summary</h2>")
                 .append("<br />")
                 .append("<strong>Total Lines:</strong>" + totalLines.toString())
-                .append("<p>");  // Add p element to HTML for displaying averages
-
+                .append("<p>")  // Add p element to HTML for displaying averages
+                .append("<div>Record avg: " + velocityData.getRecord()/totalLines
+                        + "</div><div>Dcs Model avg: " + velocityData.getDcsModel()/totalLines
+                        + "</div><div>Dcs Serial avg: " + velocityData.getDcsSerial()/totalLines
+                        + "</div><div>Abs Tilt avg: " + velocityData.getDcsAbsTiltAvg()/totalLines
+                        + "</div><div>Dcs Direction avg: " + velocityData.getDcsDirectionAvg()/totalLines
+                        + "</div><div>Dcs North avg: " + velocityData.getDcsNorthCurAvg()/totalLines
+                        + "</div><div>Dcs East avg: " + velocityData.getDcsEastCurAvg()/totalLines
+                        + "</div><div>Dcs Heading avg: " + velocityData.getDcsHeadingAvg()/totalLines
+                        + "</div><div>Dcs Tilt x avg: " + velocityData.getDcsTiltXAvg()/totalLines
+                        + "</div><div>Dcs Tilt y avg: " + velocityData.getDcsTiltYAvg()/totalLines
+                        + "</div><div>Dcs Sp Std avg: " + velocityData.getDcsSpStdAvg()/totalLines
+                        + "</div><div>Dcs Sig Strength avg: " + velocityData.getDcsSigStrengthAvg()/totalLines
+                        + "</div><div>Dcs Ping avg: " + velocityData.getDcsPingCntAvg()/totalLines
+                        + "</div><div>Dcs Abs Tilt avg: " + velocityData.getDcsAbsTiltAvg()/totalLines
+                        + "</div><div>Dcs Max Tilt avg: " + velocityData.getDscMaxTiltAvg()/totalLines
+                        + "</div><div>Dcs Std Tilt avg: " + velocityData.getDcsStdTiltAvg()/totalLines);
+               // )
         // TODO: You will also have to do some work here to ensure the details are complete.
-        summaryBuilder.append("</p>")
+        summaryBuilder.append("<div></p>")
                 .append("</body>");
 
         return summaryBuilder.toString();

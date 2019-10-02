@@ -99,11 +99,10 @@ class VelocityAndDirectionServiceTest {
     @Test
     void parseMultipleLinesTest() {
        var lines = VelocityAndDirectionService.parseLines(Arrays.asList(
+                "Header",
                 VALID_LINE,
                 VALID_LINE
         ));
-
-       System.out.println(lines.toString());
 
        assertEquals(2, lines.size());
        assertTrue(lines.get(0).equals(lines.get(1)));
